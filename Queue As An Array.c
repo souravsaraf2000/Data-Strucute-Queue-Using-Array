@@ -1,68 +1,84 @@
-#include<stdio.h>
-#include<conio.h>
-int size,front=-1,rear=-1;
-void insert(int arr[])
+#include <stdio.h>
+ 
+#define MAX 50
+ 
+void insert();
+void delete();
+void display();
+int queue_array[MAX];
+int rear = - 1;
+int front = - 1;
+main()
 {
-    int num;
-    if(rear==size-1)
-        printf("\n\aQueue Overflow!!!\n");
-    else{
-        printf("\nEnter No. For Insertion=");
-        scanf("%d",&num);
-        rear++;
-        arr[rear]=num;
-        printf("\nInsertion Successful\n");
-        }
-    if(front==-1)
-        front=0;
-}
-void Delete(int arr[])
+    int choice;
+    while (1)
+    {
+        printf("1.Insert element to queue \n");
+        printf("2.Delete element from queue \n");
+        printf("3.Display all elements of queue \n");
+        printf("4.Quit \n");
+        printf("Enter your choice : ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+            case 1:
+            insert();
+            break;
+            case 2:
+            delete();
+            break;
+            case 3:
+            display();
+            break;
+            case 4:
+            exit(1);
+            default:
+            printf("Wrong choice \n");
+        } /* End of switch */
+    } /* End of while */
+} /* End of main() */
+ 
+void insert()
 {
-    if(rear==-1)
-        printf("\n\aQueue Underflow!!!\n");
+    int add_item;
+    if (rear == MAX - 1)
+    printf("Queue Overflow \n");
     else
     {
-        int x;
-        x=arr[front];
-         if(front==rear)
-         {
-             printf("\nDeleted element= %d ! It was the last element!!\n",x);
-             front=rear=-1;
-         }
-         else
-         {
-            front++;
-            printf("\nDeleted Element= %d !!\n",x);
-         }
+        if (front == - 1)
+        /*If queue is initially empty */
+        front = 0;
+        printf("Inset the element in queue : ");
+        scanf("%d", &add_item);
+        rear = rear + 1;
+        queue_array[rear] = add_item;
     }
-}
-void display(int arr[])
+} /* End of insert() */
+ 
+void delete()
+{
+    if (front == - 1 || front > rear)
+    {
+        printf("Queue Underflow \n");
+        return ;
+    }
+    else
+    {
+        printf("Element deleted from queue is : %d\n", queue_array[front]);
+        front = front + 1;
+    }
+} /* End of delete() */
+ 
+void display()
 {
     int i;
-    printf("Queue :\n");
-    for(i=front;i<=rear;i++)
-        printf("%d\t",arr[i]);
-}
-int main()
-{
-    int x,arr[50];
-    char ch;
-    printf("Enter the maximum number of elements=");
-    scanf("%d",&size);
-    do
+    if (front == - 1)
+        printf("Queue is empty \n");
+    else
     {
-        system("cls");
-        printf("----------Queue As An Array----------\n");
-        printf("\n\tPress 1 for Insertion\n\tPress 2 for Deletion\n\tPress 3 for Display\n\tEnter your choice=");
-        scanf("%d",&x);
-        switch(x)
-        {
-            case 1: insert(arr);break;
-            case 2: Delete(arr);break;
-            case 3: display(arr);break;
-            default:printf("\nWrong Choice!!! Enter Again!!!");break;
-        }
-        printf("\nDo You Want To Continue(Y/N)=");
-        ch=getch();
-    }while(ch=='Y'||ch=='y');
-}
+        printf("Queue is : \n");
+        for (i = front; i <= rear; i++)
+            printf("%d ", queue_array[i]);
+        printf("\n");
+    }
+} /* End of display() */
